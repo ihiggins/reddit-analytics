@@ -4,7 +4,8 @@ import styles from "../styles/Home.module.css";
 import React, { useState } from "react";
 
 import Preview from "./preview/preview.js";
-
+import Top from "./top/top";
+import Side from "./side/side";
 export default function Home() {
   const [term, setTerm] = useState("");
 
@@ -35,7 +36,6 @@ export default function Home() {
     }
 
     postData("/api/search/", { term: term }).then((data) => {
-      console.log(data);
       setSearches((searches) => [searches, <Preview term={data} />]);
     });
   };
@@ -47,21 +47,24 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-    <div className={styles.nav}></div>
+      <div className={styles.nav}></div>
       <main className={styles.landing}>
-        <div className={styles.search}>
+        <div className={styles.content}>
           <div className={styles.wrapper}>
-          <input
-            value={term}
-            onChange={(e) => setTerm(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={"Search SubReddit"}
-          />
-          <div className={styles.searchButton}></div>
+            <input
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={"Search SubReddit"}
+            />
+            <div className={styles.searchButton}></div>
+          </div>
+          <div id="searched">{searches}</div>
+          <div className={styles.table}>
+            <Top />
+            <Side />
           </div>
         </div>
-
-        <div id="searched">{searches}</div>
       </main>
     </div>
   );

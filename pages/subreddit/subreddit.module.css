@@ -1,0 +1,25 @@
+
+.wrapper{
+    width:80%;
+    padding:10px;
+    display: flex;
+    justify-content: space-around;
+    
+    font-family: verdana, arial, helvetica, sans-serif;
+}
+.img{
+    height:32px;
+    width:32px;
+    border-radius: 100px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+}
+.title{font-size: 18px;
+    margin:10px;}
+.desc{
+    font-size:14px;
+    margin:0;
+}

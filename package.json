@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "epoch-timeago": "^1.1.9",
     "next": "10.0.8",
     "react": "17.0.1",
     "react-chartjs-2": "^2.11.1",
