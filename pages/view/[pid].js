@@ -11,13 +11,13 @@ export default function View(subreddit) {
   const router = useRouter();
   const { pid } = router.query;
   const [data, setData] = useState({});
-  const [build,setBuild] = useState([]);
+  const [build, setBuild] = useState([]);
 
   useEffect(() => {
     postData(`/api/data/${pid}`, {}).then((data) => {
       console.log(data);
       setData(data.data);
-      setBuild([<Preview data={data.title}/>])
+      setBuild([<Preview key={data} data={data.data.title} />]);
     });
   }, []);
 
@@ -26,17 +26,15 @@ export default function View(subreddit) {
       <div className="nav"></div>
       <div className="content">
         <div className="card">
-
-        {data.title}
-        {data.active_user_count}
-        {data.description}
-        {data.created_utc}
-        {data.id}
-        {data.lang}
-        {data.over18}
-        {data.subscribers}
-        {data.whitelist_status}
-        
+          {data.title}
+          {data.active_user_count}
+          {/* {data.description} */}
+          {data.created_utc}
+          {data.id}
+          {data.lang}
+          {data.over18}
+          {data.subscribers}
+          {data.whitelist_status}
         </div>
         {build}
       </div>

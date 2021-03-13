@@ -9,7 +9,8 @@ const reddit = new Reddit({
 });
 
 export default async (req, res) => {
-  var data = await bukketSubreddit("wallstreetbets");
+  console.log(req.body.term.data)
+  var data = await bukketSubreddit(req.body.term.data);
   res.statusCode = 200;
   res.json({ arr: data });
 };

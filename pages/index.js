@@ -3,11 +3,9 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import React, { useState } from "react";
 
-import Preview from "./preview/preview.js";
 import Top from "./top/top";
 import Side from "./side/side";
-import { useRouter } from 'next/router'
-
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [term, setTerm] = useState("");
@@ -22,10 +20,9 @@ export default function Home() {
     } else {
       postData("/api/type", { query: term }).then((data) => {
         data = data.data.subreddits;
-      
+
         setFill([]);
         for (var i = 0; i < data.length && i < 5; i++) {
-  
           setFill((fill) => [fill, <div key={i}> {data[i].name}</div>]);
         }
       });
@@ -34,9 +31,7 @@ export default function Home() {
 
   const [searches, setSearches] = useState([]);
   var search = async () => {
-    
-      router.push('/view/'+term)
-
+    router.push("/view/" + term);
   };
 
   return (
