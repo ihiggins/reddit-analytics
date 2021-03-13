@@ -1,5 +1,5 @@
 const Reddit = require("reddit");
-const timeStamp = require("unix-console);
+const timeStamp = require("unix-timestamp");
 
 const reddit = new Reddit({
   username: "ihiggins090",

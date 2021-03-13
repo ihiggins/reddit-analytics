@@ -1,40 +1,45 @@
-import { render } from "react-dom";
 import React, { useState, useEffect } from "react";
-import styles from "./preview.module.css";
-import { Line } from "react-chartjs-2";
+import { useRouter } from "next/router";
 
-export default function Preview(title) {
+import Preview from "../preview/preview.js";
 
-  const [arr, setArr] = useState({});
+const Reddit = require("reddit");
+
+// [/r/subreddit]/about/moderators
+
+export default function View(subreddit) {
+  const router = useRouter();
+  const { pid } = router.query;
+  const [data, setData] = useState({});
+  const [build,setBuild] = useState([]);
 
   useEffect(() => {
-    postData("/api/pull/", { term: title }).then((arr) => {
-      console.log(arr);
-      setArr({
-        labels: ['1', '2','3','4','5','6','7','8','9','10','11','12'],
-        datasets: [
-          {
-            label: 'My First dataset',
-            data: arr.arr,
-          },
-          {
-            label: 'My Second dataset',
-            data: [0, 1, 0]
-          },
-        ]
+    postData(`/api/data/${pid}`, {}).then((data) => {
+      console.log(data);
+      setData(data.data);
+      setBuild([<Preview data={data.title}/>])
     });
-
-    });
-  },[]);
+  }, []);
 
   return (
-    <div className={`card preview`}>
-      Post History
-      <Line
-        data={arr}
-        width={500}
-        height={100}
-      />
+    <div className="page">
+      <div className="nav"></div>
+      <div className="content">
+        <div className="card">
+
+        {data.title}
+        {data.active_user_count}
+        {data.description}
+        {data.created_utc}
+        {data.id}
+        {data.lang}
+        {data.over18}
+        {data.subscribers}
+        {data.whitelist_status}
+        
+        </div>
+        {build}
+      </div>
     </div>
   );
 }

@@ -23,5 +23,10 @@ export default async (req, res) => {
       res.statusCode = 200;
       res.json({ data: temp.data.children });
       break;
+    default:
+      var temp = await reddit.get(`/r/${pid}/about`);
+      res.statusCode = 200;
+  
+      res.json({ data: temp.data});
   }
 };

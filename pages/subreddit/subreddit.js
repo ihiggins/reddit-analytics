@@ -8,7 +8,7 @@ export default function subReddit(data) {
     previewImg = data.header_img;
   }
   const time = timeago(data.created_utc * 1000);
-  console.log(data);
+
   return (
     <div className="card">
       <div className={styles.header}>

@@ -6,9 +6,13 @@ import React, { useState } from "react";
 import Preview from "./preview/preview.js";
 import Top from "./top/top";
 import Side from "./side/side";
+import { useRouter } from 'next/router'
+
+
 export default function Home() {
   const [term, setTerm] = useState("");
   const [fill, setFill] = useState([]);
+  const router = useRouter();
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -18,10 +22,10 @@ export default function Home() {
     } else {
       postData("/api/type", { query: term }).then((data) => {
         data = data.data.subreddits;
-        console.log(data);
+      
         setFill([]);
         for (var i = 0; i < data.length && i < 5; i++) {
-          console.log(i);
+  
           setFill((fill) => [fill, <div key={i}> {data[i].name}</div>]);
         }
       });
@@ -30,9 +34,9 @@ export default function Home() {
 
   const [searches, setSearches] = useState([]);
   var search = async () => {
-    // postData("/api/search/", { term: term }).then((data) => {
-    //   setSearches((searches) => [searches, <Preview term={data} />]);
-    // });
+    
+      router.push('/view/'+term)
+
   };
 
   return (
