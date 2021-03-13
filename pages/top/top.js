@@ -21,7 +21,6 @@ export default function Top() {
     return (
 
         <div className={styles.wrapper}>
-            <div className="card">TABBEER</div>
             {subs}
         </div>
     )

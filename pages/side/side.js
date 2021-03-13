@@ -38,7 +38,7 @@ export default function Side() {
         hosted video links
       </div>
 
-      <div className="card">{newest}</div>
+      <div className={`card ${styles.newest}`}>{newest}</div>
     </div>
   );
 }
