@@ -15,7 +15,7 @@ export default function subReddit(data) {
     <div
       className="card"
       onClick={function (e) {
-        router.push("/view/" + data.title);
+        router.push("/view/" + data.url.slice(3));
       }}
     >
       <div className="card-content">

@@ -9,7 +9,7 @@ const reddit = new Reddit({
 });
 
 export default async (req, res) => {
-  console.log(req.body.term.data)
+  console.log(req.body)
   var data = await bukketSubreddit(req.body.term.data);
   res.statusCode = 200;
   res.json({ arr: data });
@@ -67,7 +67,8 @@ var bukketSubreddit = async (subreddit) => {
 };
 
 const pullThreads = async (subreddit, time, after, result) => {
-  const res = await reddit.get("/r/" + subreddit + "/new", {
+
+  const res = await reddit.get(subreddit + "new", {
     limit: 100,
     after: after,
   });

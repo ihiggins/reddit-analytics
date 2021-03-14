@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Top from "./top/top";
 import Side from "./side/side";
@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 export default function Home() {
   const [term, setTerm] = useState("");
   const [fill, setFill] = useState([]);
+  const [ws, setWs] = useState(0);
   const router = useRouter();
 
   const handleKeyDown = (event) => {
@@ -28,6 +29,10 @@ export default function Home() {
       });
     }
   };
+
+  useEffect(() => {
+    setWs(window.innerWidth);
+  }, []);
 
   const [searches, setSearches] = useState([]);
   var search = async () => {
@@ -60,7 +65,7 @@ export default function Home() {
           <div id="searched">{searches}</div>
           <div className={styles.table}>
             <Top />
-            <Side />
+            {ws >= 900 && <Side term={"/api/data/new"} />}
           </div>
         </div>
       </main>

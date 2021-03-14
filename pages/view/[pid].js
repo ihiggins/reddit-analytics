@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import timeago from "epoch-timeago";
+import Side from "../side/side";
 import Preview from "../preview/preview.js";
 
 const Reddit = require("reddit");
@@ -12,50 +13,68 @@ export default function View(subreddit) {
   const { pid } = router.query;
   const [data, setData] = useState({});
   const [build, setBuild] = useState([]);
+  var time = "";
 
+  const [ws, setWs] = useState(0);
   useEffect(() => {
-    postData(`/api/data/${pid}`, {}).then((data) => {
-      console.log(data);
-      setData(data.data);
-      setBuild([<Preview key={data} data={data.data.title} />]);
-    });
-  }, []);
+    setWs(window.innerWidth);
+    const interval = setInterval(() => {
+      postData(`/api/data/${pid}`, {}).then((data) => {
+        // time = timeago(data.created_utc * 1000)
+        setData(data.data)
+        setBuild([<Preview key={data} data={data.data.url} />]);
+      });
+    }, 500);
+    return () => clearInterval(interval);
+  });
 
   return (
     <div className="page">
       <div className="nav"></div>
       <div className="content">
-        <div className="card">
-          {data.title}
-          {data.active_user_count}
-          {/* {data.description} */}
-          {data.created_utc}
-          {data.id}
-          {data.lang}
-          {data.over18}
-          {data.subscribers}
-          {data.whitelist_status}
+        <div>
+          <div className="card">
+            <div className="card-content">
+              <h4 className="card-title">{data.title}</h4>
+              <div className="card-desc">
+                Active Users: {data.active_user_count}
+                <br />
+                ID: {data.id} <br />
+                Language: {data.lang}
+                <br />
+                Add Status: {data.whitelist_status}
+              </div>
+            </div>
+          </div>
+          <div className="card">
+            {" "}
+            <div className="card-content">
+              <h4 className="card-title">Subscribers:</h4>
+              {data.subscribers}
+            </div>
+          </div>
+          {build}
         </div>
-        {build}
+        {ws >= 700 && <Side term={"/api/data/new"} />}
       </div>
     </div>
   );
 }
 
 async function postData(url = "", data = {}) {
-  // Default options are marked with *
+
   const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+    method: "POST",
+    mode: "cors", 
+    cache: "no-cache",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+     
     },
-    redirect: "follow", // manual, *follow, error
-    referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data), 
   });
-  return response.json(); // parses JSON response into native JavaScript objects
+  return response.json();
 }

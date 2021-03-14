@@ -4,12 +4,12 @@ import timeago from "epoch-timeago";
 
 import timeStamp from "unix-timestamp";
 
-export default function Side() {
+export default function Side(term) {
   const [newest, setNew] = useState([]);
   const time = timeStamp.now();
 
   useEffect(() => {
-    postData("/api/data/new", {}).then((arr) => {
+    postData(term.term, {}).then((arr) => {
       for (var i in arr.data) {
         var temp = arr.data[i].data.title;
         const last = timeago(arr.data[i].data.created_utc * 1000);

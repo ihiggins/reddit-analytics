@@ -8,19 +8,15 @@ export default function Preview(title) {
   const [arr, setArr] = useState({});
 
   useEffect(() => {
+
     postData("/api/pull/", { term: title }).then((arr) => {
-      console.log(arr);
       setArr({
         labels: ['1', '2','3','4','5','6','7','8','9','10','11','12'],
         datasets: [
           {
-            label: 'My First dataset',
+            label: 'Number of Posts',
             data: arr.arr,
-          },
-          {
-            label: 'My Second dataset',
-            data: [0, 1, 0]
-          },
+          }
         ]
     });
 
@@ -33,7 +29,7 @@ export default function Preview(title) {
       <Line
         data={arr}
         width={500}
-        height={100}
+        height={200}
       />
     </div>
   );

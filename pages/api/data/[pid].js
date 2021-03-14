@@ -11,7 +11,6 @@ var reddit = new Reddit({
 
 export default async (req, res) => {
   const { pid } = req.query;
-
   switch (pid) {
     case "top":
       var temp = await reddit.get("/subreddits/popular", { limit: 10 });

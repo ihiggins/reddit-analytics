@@ -28,7 +28,9 @@ a {
   position: relative;
   top: 60px;
   width: 80%;
-  background: green;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .nav {
